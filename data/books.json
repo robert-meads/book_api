@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Freddy vs Jason",
+    "author": "Bob Myers",
+    "id": 1
+  },
+  {
+    "title": "Call of the Wild",
+    "author": "Jack Nature",
+    "id": 2
+  },
+  {
+    "title": "Spirited Away",
+    "author": "Hayao Miyazaki",
+    "id": 4
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J K Rowling",
+    "id": 5
+  },
+  {
+    "title": "Parrot High",
+    "author": "Zoo Brigrade",
+    "id": 6
+  }
+]
