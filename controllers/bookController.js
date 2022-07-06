@@ -32,9 +32,33 @@ async function getBook(req, res, id) {
   }
 }
 
-async function addBook(req, res) 
+/*
+  Easy example before getting post data from request body.
+
+  Create a static book.
+  Need to add it to data's book.json file to update our "database".
+  Return our static book to user.
+*/
+async function addBook(req, res) {
+  try {
+    // static book
+    const book = {
+      title: 'End of College',
+      author: 'Da Man',
+      id: 99,
+    };
+
+    // Send book to model to be added to json file.
+    const addedBook = await Books.add(book);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(addedBook));
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 module.exports = {
   getBooks,
   getBook,
+  addBook,
 };

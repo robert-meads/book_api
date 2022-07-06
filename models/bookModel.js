@@ -1,4 +1,6 @@
 const books = require('../data/books.json');
+const { v4: uuidv4 } = require('uuid');
+const { writeDataToFile } = require('../utils');
 
 function findAll() {
   return new Promise((resolve, reject) => {
@@ -56,7 +58,21 @@ function findOne(id) {
   });
 }
 
+function add(book) {
+  return new Promise((resolve, reject) => {
+    const newBook = { ...book, id: uuidv4() };
+    books.push(newBook);
+    writeDataToFile('./data/books.json', books);
+    resolve(newBook);
+    console.log('Difference between these two books:');
+    console.log(books);
+    console.log('\n\n');
+    console.log(JSON.stringify(books));
+  });
+}
+
 module.exports = {
   findAll,
   findOne,
+  add,
 };
