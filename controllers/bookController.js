@@ -1,4 +1,5 @@
 const Books = require('../models/bookModel');
+const { getPostData } = require('../utils');
 
 async function getBooks(req, res) {
   try {
@@ -43,29 +44,18 @@ async function getBook(req, res, id) {
 // Post request
 async function addBook(req, res) {
   try {
-    let body = '';
+    const body = await getPostData(req);
 
-    // Receives 'chunks' of the body at a time.
-    // These chunks are in binary and so you have to convert to string.
-    req.on('data', (chunk) => {
-      body += chunk.toString();
-    });
+    const { title, author } = JSON.parse(body);
 
-    req.on('end', async () => {
-      // Time to pull out all the relevant data from the body we received.
-      const { title, author, id } = JSON.parse(body);
+    const book = {
+      title,
+      author,
+    };
 
-      // Now we create our dynamic book. We don't need the static book we made previously. Now we've successfully created a new book using post data.
-      const book = {
-        title,
-        author,
-      };
-
-      // Send book to model to be added to json file.
-      const addedBook = await Books.add(book);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(addedBook));
-    });
+    const addedBook = await Books.add(book);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(addedBook));
   } catch (err) {
     console.log(err);
   }
