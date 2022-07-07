@@ -1,5 +1,11 @@
 const http = require('http');
-const { getBooks, getBook, addBook } = require('./controllers/bookController');
+const {
+  getBooks,
+  getBook,
+  addBook,
+  updateBook,
+  deleteBook,
+} = require('./controllers/bookController');
 
 const server = http.createServer((req, res) => {
   if (req.url === '/api/books' && req.method === 'GET') {
@@ -10,6 +16,17 @@ const server = http.createServer((req, res) => {
     getBook(req, res, id);
   } else if (req.url === '/api/books' && req.method === 'POST') {
     addBook(req, res);
+  } else if (req.url.match(/\/api\/books\/([0-9]+)/) && req.method === 'PUT') {
+    const id = req.url.match(/\/api\/books\/([0-9]+)/)[1];
+    console.log(id);
+    console.log('updating...');
+    updateBook(req, res, id);
+  } else if (
+    req.url.match(/\/api\/books\/([0-9]+)/) &&
+    req.method === 'DELETE'
+  ) {
+    const id = req.url.match(/\/api\/books\/([0-9]+)/)[1];
+    deleteBook(req, res, id);
   }
 });
 
@@ -22,8 +39,8 @@ server.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
 // Goal: create a todo list as described by https://www.codecademy.com/article/mvc
 // using node and js
 
+// Original Library
 /*
-
 [
   {
     "title": "Freddy vs Jason",
