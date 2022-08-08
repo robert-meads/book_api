@@ -10,15 +10,19 @@ const {
 const server = http.createServer((req, res) => {
   // regex stuff
   const main_path = '/api/books';
-  const end = '$';
+  const end = '$'; // regex operator for end of line.
   const num_path = '/([0-9]+)';
   const uuid_path = '/([a-zA-Z0-9-]+)';
 
   const home = new RegExp(`${main_path + end}`);
   const get_id = new RegExp(`${main_path + uuid_path}`);
 
+  // test looks at its calling object's regex expression and check if argument matches object's regex. Returns true or false.
+
+  // console.log(req.url);
+
   if (home.test(`${req.url}`) && req.method === 'GET') {
-    console.log('Inside get all.');
+    // console.log('Inside get all.');
     getBooks(req, res);
   } else if (get_id.test(req.url) && req.method === 'GET') {
     // match function returns an array of values and properties. Print it out to see why we want index 1.
@@ -44,6 +48,10 @@ const server = http.createServer((req, res) => {
 
     getBook(req, res, id);
   } else if (req.url === '/api/books' && req.method === 'POST') {
+    console.log('Adding Book via POST.');
+
+    // let obj = { name: 'Bob', age: 10 };
+    // res.end(JSON.stringify(obj));
     addBook(req, res);
   } else if (req.url.match(/\/api\/books\/([0-9]+)/) && req.method === 'PUT') {
     const id = req.url.match(/\/api\/books\/([0-9]+)/)[1];

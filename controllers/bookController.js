@@ -9,11 +9,23 @@ async function getBooks(req, res) {
     const books = await Books.findAll();
     res.writeHead(200, { 'Content-Type': 'application/json' });
 
-    // The books array is filled with objects.
+    // // The books array is filled with objects.
     // console.log('Regular JSON: ', books);
     // console.log(typeof books);
 
-    // Here, we convert those js objects into JSON strings.
+    // // 'for-of' is used to loop through an iterable.
+    // for (let book of books) {
+    //   console.log('book', book);
+    //   // 'for-in' is used to loop through properties of an obj.
+    //   for (let key in book) {
+    //     console.log('key', key);
+    //     // console.log('book.key', book.key);  // doesn't work for some reason.
+    //     console.log('book[key]', book[key]);
+    //   }
+    //     console.log('');
+    // }
+
+    // // Here, we convert those js objects into JSON strings.
     // console.log('JSON String: ', JSON.stringify(books));
     // console.log(typeof JSON.stringify(books));
 
@@ -49,17 +61,21 @@ async function getBook(req, res, id) {
 async function addBook(req, res) {
   try {
     const body = await getPostData(req);
+    console.log('Sending FormData Body back...');
+    // Testing formData
+    // res.end(JSON.stringify({ msg: 'Added Book.' }));
+    console.log('body', body);
+    res.end(body)
+    // const { title, author } = JSON.parse(body);
 
-    const { title, author } = JSON.parse(body);
+    // const book = {
+    //   title,
+    //   author,
+    // };
 
-    const book = {
-      title,
-      author,
-    };
-
-    const addedBook = await Books.add(book);
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(addedBook));
+    // const addedBook = await Books.add(book);
+    // res.writeHead(200, { 'Content-Type': 'application/json' });
+    // res.end(JSON.stringify(addedBook));
   } catch (err) {
     console.log(err);
   }
